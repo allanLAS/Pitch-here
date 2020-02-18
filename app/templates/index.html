@@ -5,7 +5,10 @@
         <div class="row">
             <div class="col-md-12 welcome">
                 {% if current_user.is_authenticated%}
-                <a id="start" class="btn "></a>
+                <a id="start" class="btn " href="{{url_for('home.index')}}">View all pitches</a>
+                {% else %}
+                <a id="start" class="btn" href="{{url_for('auth.login')}}">Sign in</a>
+                {% endif %}
 
 
             </div>
@@ -15,3 +18,4 @@
     </div>
 
 </div>
+{% endblock %}
