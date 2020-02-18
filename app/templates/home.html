@@ -1,0 +1,48 @@
+{% extends 'bootstrap/base.html' %}
+{% import 'macros.html' as macro %}
+{% block navbar %}
+{% include 'navbar.html'%}
+{% endblock %}
+
+    {% block content %}
+    <div class="container">
+        <h3 style="color: yellow;text-align: center">Categories</h3>
+
+        <ul class="nav " role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#interview">Interview</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#pickupline">Pickup Line</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#product">Product</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#promotion">Promotion</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div id="interview" class="container tab-pane active"><br>
+                {{ macro.display(interviewpitch) }}
+
+            </div>
+            <div id="pickupline" class="container tab-pane active"><br>
+                {{ macro.display(pickuplines) }}
+
+            </div>
+            <div id="product" class="container tab-pane active"><br>
+                {{ macro.display(productpitch) }}
+
+            </div>
+            <div id="interview" class="container tab-pane active"><br>
+                {{ macro.display(promotionpitch) }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    {% endblock %}
