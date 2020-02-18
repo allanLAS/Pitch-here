@@ -32,7 +32,7 @@ def index():
 @login_required
 def new_pitch():
     form = PitchForm()
-    my_upvotes = Upvote.query.filter_by(pitch_id = Pitch.id)
+    my_upvotes = Upvote.query.filter_by(pitch_id=Pitch.id)
     if form.validate_on_submit():
         description = form.description.data
         title = form.title.data
@@ -69,7 +69,7 @@ def new_comment(pitch_id):
 def upvote(pitch_id):
     pitch = Pitch.query.get(pitch_id)
     user = current_user
-    pitcch_upvotes = Upvote.query.filter_by(pitch_id=pitch_id`)
+    pitch_upvotes = Upvote.query.filter_by(pitch_id=pitch_id)
 
     if Upvote.query.filter(Upvote.user_id==user.id,Upvote.pitch_id==pitch_id).first():
         return redirect(url_for('main.index'))
@@ -85,7 +85,7 @@ def downvote(pitch_id):
     user = current_user
     pitch_downvotes = Downvote.query.filter_by(pitch_id=pitch_id)
 
-    if Downvote.query.filter(Downvote.user_id==user.id, Downvote.pitch_id==pitch_id)
+    if Downvote.query.filter(Downvote.user_id==user.id, Downvote.pitch_id==pitch_id).first():
         return redirect(url_for('main.index'))
 
     new_downvote = Downvote(pitch_id=pitch_id, user=current_user)

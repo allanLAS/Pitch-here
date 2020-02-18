@@ -32,10 +32,15 @@
     {% if comments %}
     {% for comment in comments %}
         <div class="row text-center">
+            <a><p style="color: green">{{comment.description}}</p></a>
+            <p><small>Posted by: {{comment.user.username}}</small></p>
 
 
         </div>
+    {% endfor %}
 </ul>
+
+{% endmacro %}
 
 
 
