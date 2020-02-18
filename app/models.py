@@ -2,6 +2,7 @@ from .import db
 from flask_login import UserMixin, current_user
 from werkzeug.security import generate_password_hash,check_password_hash
 from . import login_manager
+from sqlalchemy.sql import func
 
 @login_manager .user_loader
 def load_user(user_id):
@@ -54,7 +55,7 @@ class Pitch(db.Model):
         return pitches
 
     def __repr__(self):
-        return f'User {self.description}'
+        return f'Pitch {self.description}'
 
 class Comment(db.Model):
     __tablename__='comments'
@@ -80,7 +81,7 @@ class Upvote(db.Model):
         db.session.commit()
 
     def add_upvotes(cls,id):
-        upvote_pitch = Upvote.query.filter_by(pitch_id=id)
+        upvote_pitch = Upvote(user = current_user, pitch_id=id)
         upvote_pitch.save_upvotes()
 
 
