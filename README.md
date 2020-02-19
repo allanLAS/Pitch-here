@@ -34,7 +34,7 @@ You will need to:
 # Build & Deployment
 To run it locally use:
 
- $ ./start.sh
+    $ ./start.sh
 
 # License
 [LICENSE](LICENSE)
