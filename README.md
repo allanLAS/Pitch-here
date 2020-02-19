@@ -15,7 +15,7 @@ These instructions will get you a copy of the project up and running on your loc
 # Known Bugs
 There are no known bugs.
 
-#Prerequisites
+# Prerequisites
 
 You will need to:
 
