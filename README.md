@@ -36,5 +36,10 @@ To run it locally use:
 
     $ ./start.sh
 
+
+# Code Beat
+
+[![codebeat badge](https://codebeat.co/badges/4752bd2f-e044-4d64-8c4b-b924f1b29ef4)](https://codebeat.co/projects/github-com-allanlas-pitch-here-master)
+
 # License
 [LICENSE](LICENSE)
