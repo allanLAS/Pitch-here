@@ -4,7 +4,7 @@ import os
 
 class Config:
     """"""
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://allan:1234@localhost/pitch'
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
     SECRET_KEY = os.environ.get('SECRET_KEY')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
@@ -27,12 +27,11 @@ class Config:
 
 class ProdConfig(Config):
     """"""
-    # SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
+    SQLALCHEMY_DATABASE_URI = os.environ.get("DATABASE_URL")
 
 
 
 class DevConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://allan:1234@localhost/pitch'
     DEBUG = True
 
 
