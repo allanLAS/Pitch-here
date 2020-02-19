@@ -15,8 +15,11 @@ These instructions will get you a copy of the project up and running on your loc
 #Prerequisites
 
 You will need to:
+
     1. Have python installed
+    
     2. Have a terminal to interact with the app
+    
     3. A text editor
     
     
