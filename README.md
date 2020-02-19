@@ -28,13 +28,13 @@ You will need to:
     
  # Installation
  
- $ git clone <repository_url>
+    $ git clone <repository_url>
 
 
 # Build & Deployment
 To run it locally use:
 
-$ ./start.sh
+ $ ./start.sh
 
 # License
 [LICENSE](LICENSE)
