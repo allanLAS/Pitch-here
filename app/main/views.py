@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for, abort
 from . import main
 from flask_login import login_required, current_user
 from ..models import Pitch, User, Comment, Upvote, Downvote
-from .forms import PitchForm, CommentForm, UpvoteForm, DownvoteForm
+from .forms import PitchForm, CommentForm, UpvoteForm, DownvoteForm, UpdateProfile
 from flask.views import View, MethodView
 
 from .. import db
@@ -13,25 +13,21 @@ import markdown2
 @main.route('/', methods=['GET', 'POST'])
 def index():
     """"""
-    pitch = Pitch.query.filter_by().first()
+
     title = 'Home - You have 60 secs. Pitch away!'
-    pickuplines = Pitch.query.filter_by(category="pickuplines")
-    interviewpitch = Pitch.query.filter_by(category='interviewpitch')
-    promotionpitch = Pitch.query.filter_by(category='promotionpitch')
-    productpitch = Pitch.query.filter_by(category='productpitch')
 
-    upvotes = Upvote.get_all_upvotes(pitch_id=Pitch.id)
-    downvotes = Downvote.get_all_downvotes(pitch_id=Pitch.id)
+    pitches = Pitch.query.all()
 
-    return render_template('index.html', title=title, pitch=pitch, pickuplines=pickuplines,
-                           interviewpitch=interviewpitch, promotionpitch=promotionpitch, productpitch=productpitch,
-                           upvotes=upvotes, downvotes=downvotes)
+    print(pitches)
+
+    return render_template('index.html', title=title, pitches=pitches)
 
 
 @main.route('/pitches/new/', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def new_pitch():
     form = PitchForm()
+
     my_upvotes = Upvote.query.filter_by(pitch_id=Pitch.id)
     if form.validate_on_submit():
         description = form.description.data
@@ -48,7 +44,7 @@ def new_pitch():
 
 
 @main.route('/comment/new/<int:pitch_id>', methods=['GET','POST'])
-@login_required
+# @login_required
 def new_comment(pitch_id):
     form = CommentForm()
     pitch = Pitch.query.get(pitch_id)
@@ -91,3 +87,31 @@ def downvote(pitch_id):
     new_downvote = Downvote(pitch_id=pitch_id, user=current_user)
     new_downvote.save_downvotes()
     return redirect(url_for('main.index'))
+
+@main.route('/user/<uname>')
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
+
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user = user)
+
+@main.route('/user/<uname>/update',methods = ['GET','POST'])
+@login_required
+def update_profile(uname):
+    user = User.query.filter_by(username = uname).first()
+    if user is None:
+        abort(404)
+
+    form = UpdateProfile()
+
+    if form.validate_on_submit():
+        user.bio = form.bio.data
+
+        db.session.add(user)
+        db.session.commit()
+
+        return redirect(url_for('.profile',uname=user.username))
+
+    return render_template('profile/update.html',form =form)

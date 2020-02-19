@@ -13,7 +13,7 @@ def load_user(user_id):
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(255))
+    username = db.Column(db.String(255), index=True)
     email = db.Column(db.String(255), unique=True, index=True)
     pass_secure = db.Column(db.String(255))
     pitch = db.relationship('Pitch', backref='username', lazy='dynamic')
@@ -35,7 +35,7 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.pass_secure, password)
 
     def __repr__(self):
-        return f'{self.username}'
+        return f'User {self.username}'
 
 
 class Pitch(db.Model):
@@ -53,10 +53,19 @@ class Pitch(db.Model):
     upvotes = db.relationship('Upvote', backref='pitch', lazy='dynamic')
     downvotes = db.relationship('Downvote', backref='pitch', lazy='dynamic')
 
+    def save_pitch(self):
+        db.session.add(self)
+        db.session.commit()
+
     @classmethod
-    def get_pitches(cls, id):
-        pitches = Pitch.query.order_by(pitch_id=id).desc().all()
+    def get_pitches(cls):
+        pitches = Pitch.query.all()
         return pitches
+
+    # @classmethod
+    # def get_pitches_by_category(cls, cat):
+    #     pitches = Pitch.query.filter_by(category=cat).all()
+    #     return pitches
 
     def __repr__(self):
         return f'Pitch {self.description}'
@@ -101,7 +110,7 @@ class Upvote(db.Model):
         return upvotes
 
     def __repr__(self):
-        return f'{self.user_id}:{self.pitch_id}'
+        return f'Upvote {self.user_id}:{self.pitch_id}'
 
 
 class Downvote(db.Model):
@@ -131,4 +140,4 @@ class Downvote(db.Model):
         return downvote
 
     def __repr__(self):
-        return f'{self.user_id}:{self.pitch_id}'
+        return f'Downvote {self.user_id}:{self.pitch_id}'

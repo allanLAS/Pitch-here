@@ -23,25 +23,31 @@
             </li>
         </ul>
 
-        <div class="tab-content">
-            <div id="interview" class="container tab-pane active"><br>
-                {{ macro.display(interviewpitch) }}
+<!--        <div class="tab-content">-->
+<!--            <div id="interview" class="container tab-pane active"><br>-->
+<!--                {{ macro.display(interviewpitch) }}-->
 
-            </div>
-            <div id="pickupline" class="container tab-pane active"><br>
-                {{ macro.display(pickuplines) }}
+<!--            </div>-->
+<!--            <div id="pickupline" class="container tab-pane active"><br>-->
+<!--                {{ macro.display(pickuplines) }}-->
 
-            </div>
-            <div id="product" class="container tab-pane active"><br>
-                {{ macro.display(productpitch) }}
+<!--            </div>-->
+<!--            <div id="product" class="container tab-pane active"><br>-->
+<!--                {{ macro.display(productpitch) }}-->
 
-            </div>
-            <div id="interview" class="container tab-pane active"><br>
-                {{ macro.display(promotionpitch) }}
+<!--            </div>-->
+<!--            <div id="promotion" class="container tab-pane active"><br>-->
+<!--                {{ macro.display(promotionpitch) }}-->
 
-            </div>
+<!--            </div>-->
 
-        </div>
+<!--        </div>-->
+
+        <h1>ALL PITCHES</h1>
+        {% for pitches in pitches%}
+        <h3><li>{{pitches.pitches}}</li></h3>
+        <a href="/comments" class="badge progress-bar-warning">Add comment</a>
+        {% endfor %}
 
     </div>
 

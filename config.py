@@ -21,7 +21,7 @@ class Config:
     MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
     SUBJECT_PREFIX = 'Pitch'
-    SENDER_EMAIL = 'allan@gmail.com'
+    SENDER_EMAIL = 'allanlumumba@gmail.com'
 
 
 
@@ -32,6 +32,7 @@ class ProdConfig(Config):
 
 
 class DevConfig(Config):
+    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://allan:1234@localhost/pitch'
     DEBUG = True
 
 
