@@ -18,6 +18,8 @@ def index():
     pitches = Pitch.query.all()
 
     print(pitches)
+    upvotes = Upvote.get_all_upvotes(pitch_id=Pitch.id)
+    print(upvotes)
 
     return render_template('index.html', title=title, pitches=pitches)
 
@@ -34,7 +36,8 @@ def new_pitch():
         owner_id = current_user
         category = form.category.data
         print(current_user._get_current_object().id)
-        new_pitch = Pitch(owner_id=current_user._get_current_object().id, title=title, description=description, category=category)
+        new_pitch = Pitch(owner_id=current_user._get_current_object().id, title=title, description=description,
+                          category=category)
         db.session.add(new_pitch)
         db.session.commit()
 
@@ -42,7 +45,7 @@ def new_pitch():
     return render_template('pitches.html', form=form)
 
 
-@main.route('/comment/new/<int:pitch_id>', methods=['GET','POST'])
+@main.route('/comment/new/<int:pitch_id>', methods=['GET', 'POST'])
 # @login_required
 def new_comment(pitch_id):
     form = CommentForm()
@@ -59,47 +62,51 @@ def new_comment(pitch_id):
     all_comments = Comment.query.filter_by(pitch_id=pitch_id).all()
     return render_template('comments.html', form=form, comment=all_comments, pitch=pitch)
 
-@main.route('/pitch/upvote/<int:pitch_id>/upvote', methods=['GET','POST'])
+
+@main.route('/pitch/upvote/<int:pitch_id>/upvote', methods=['GET', 'POST'])
 @login_required
 def upvote(pitch_id):
     pitch = Pitch.query.get(pitch_id)
     user = current_user
     pitch_upvotes = Upvote.query.filter_by(pitch_id=pitch_id)
 
-    if Upvote.query.filter(Upvote.user_id==user.id,Upvote.pitch_id==pitch_id).first():
+    if Upvote.query.filter(Upvote.user_id == user.id, Upvote.pitch_id == pitch_id).first():
         return redirect(url_for('main.index'))
 
     new_upvote = Upvote(pitch_id=pitch_id, user=current_user)
     new_upvote.save_upvotes()
     return redirect(url_for('main.index'))
 
-@main.route('/pitch/downvote/<int:pitch_id>/downvote', methods=['GET','POST'])
+
+@main.route('/pitch/downvote/<int:pitch_id>/downvote', methods=['GET', 'POST'])
 @login_required
 def downvote(pitch_id):
     pitch = Pitch.query.get(pitch_id)
     user = current_user
     pitch_downvotes = Downvote.query.filter_by(pitch_id=pitch_id)
 
-    if Downvote.query.filter(Downvote.user_id==user.id, Downvote.pitch_id==pitch_id).first():
+    if Downvote.query.filter(Downvote.user_id == user.id, Downvote.pitch_id == pitch_id).first():
         return redirect(url_for('main.index'))
 
     new_downvote = Downvote(pitch_id=pitch_id, user=current_user)
     new_downvote.save_downvotes()
     return redirect(url_for('main.index'))
 
+
 @main.route('/user/<uname>')
 def profile(uname):
-    user = User.query.filter_by(username = uname).first()
+    user = User.query.filter_by(username=uname).first()
 
     if user is None:
         abort(404)
 
-    return render_template("profile/profile.html", user = user)
+    return render_template("profile/profile.html", user=user)
 
-@main.route('/user/<uname>/update',methods = ['GET','POST'])
+
+@main.route('/user/<uname>/update', methods=['GET', 'POST'])
 @login_required
 def update_profile(uname):
-    user = User.query.filter_by(username = uname).first()
+    user = User.query.filter_by(username=uname).first()
     if user is None:
         abort(404)
 
@@ -111,6 +118,6 @@ def update_profile(uname):
         db.session.add(user)
         db.session.commit()
 
-        return redirect(url_for('.profile',uname=user.username))
+        return redirect(url_for('.profile', uname=user.username))
 
-    return render_template('profile/update.html',form =form)
+    return render_template('profile/update.html', form=form)
