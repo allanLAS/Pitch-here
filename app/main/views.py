@@ -21,7 +21,7 @@ def index():
     upvotes = Upvote.get_all_upvotes(pitch_id=Pitch.id)
     print(upvotes)
 
-    return render_template('index.html', title=title, pitches=pitches)
+    return render_template('index.html', title=title, pitches=pitches, upvotes=upvotes)
 
 
 @main.route('/pitches/new/', methods=['GET', 'POST'])
