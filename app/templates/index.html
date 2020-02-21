@@ -3,15 +3,16 @@
 <div class="container-fluid welcome-page">
     <div class="container">
 
-        <div class="row">
+        <div class="row home">
 
 
             <div class="col-md-4 welcome">
                 <br><br>
-                <p><a href="{{url_for('main.new_pitch')}}">ADD PITCH</a></p>
+                <h1>PITCH AWAY!</h1>
+                <button class="btn"><a href="{{url_for('main.new_pitch')}}">ADD PITCH</a></button>
 
             </div>
-            <div class="col-md-8 welcome">
+            <div class="welcome">
                 <br><br>
                 {% for pitch in pitches %}
                 <h3><u>{{pitch.title}}</u></h3>
